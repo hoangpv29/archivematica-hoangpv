@@ -12,7 +12,11 @@
 </div>
 
 <div style='clear:both'></div>
+<style>
+  
 
+
+</style>
 <div class='facet-box panel panel-body form' ng-controller="FacetController">
   <fieldset>
     <label for='tag-facet'>{{ "Thẻ" | translate }}</label>
@@ -45,8 +49,8 @@
         Kho tạm
         <span class="counts">
           <b translate translate-n="(files.selected | filter:{'type': 'transfer'}).length"
-            translate-plural="{{$count}} chuyển đổi">1 chuyển đổi</b>,
-          <b translate translate-n="files.selected.length" translate-plural="{{$count}} đối tượng đã chọn">1 đối tượng đã được chọn</b>
+            translate-plural="{{$count}} transfers">1 chuyển đổi</b>,
+          <b translate translate-n="files.selected.length" translate-plural="{{$count}} objects selected">1 đối tượng đã được chọn</b>
         </span>
 
         <form ng-submit="submit()" class="form-inline">
@@ -202,8 +206,8 @@
       {{ "Không gian Lưu trữ" | translate }} <span ng-if="loading"><i class="fa fa-spinner fa-spin"></i></span>
 
       <form ng-submit="load_data({title: title_query, identifier: id_query})" class="form-inline">
-        <input type="text" ng-model="title_query" placeholder="{{ 'Title' | translate }}" class="form-control input-sm"/>
-        <input type="text" ng-model="id_query" placeholder="{{ 'Identifier' | translate }}" class="form-control input-sm"/>
+        <input type="text" ng-model="title_query" placeholder="{{ 'Tiêu đề' | translate }}" class="form-control input-sm"/>
+        <input type="text" ng-model="id_query" placeholder="{{ 'Mã định danh' | translate }}" class="form-control input-sm"/>
         <input type="submit" class='btn btn-sm btn-primary' id="archivesspace_search" value="{{ 'Tìm kiếm không gian Lưu trữ' | translate }}"/>
       </form>
 
@@ -236,7 +240,7 @@
                class='btn btn-primary btn-sm'
                id='delete_record'
                ng-disabled="!selected || selected.request_pending"
-               ng-confirm-click="{{ 'Are you sure you want to delete this?' | translate }}"
+               ng-confirm-click="{{ 'Bạn có chắc muốn xóa?' | translate }}"
                ng-click="remove(selected)"
                value='{{ "Delete selected" | translate }}'>
         <input type='button'
