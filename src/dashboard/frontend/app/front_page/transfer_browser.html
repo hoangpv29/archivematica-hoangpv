@@ -7,18 +7,22 @@
   </div>
   
   <div class="row" id="transfer-browser-form">
-
+<style>
+  .mb-2{
+    margin-bottom: 4px!important;
+  }
+</style>
   <div class="col-xs-2">
   <select class="form-control" ng-model="vm.transfer.type" ng-disabled="vm.transfer.components.length > 0">
-    <option value="standard" selected>{{ "Standard" | translate }}</option>
-    <option value="zipfile" selected>{{ "Zipped directory" | translate }}</option>
-    <option value="unzipped bag">{{ "Unzipped bag" | translate }}</option>
-    <option value="zipped bag">{{ "Zipped bag" | translate }}</option>
-    <option value="dspace">{{ "DSpace" | translate }}</option>
-    <option value="disk image">{{ "Disk image" | translate }}</option>
+    <option value="standard" selected>{{ "Tiêu chuẩn" | translate }}</option>
+    <option value="zipfile" selected>{{ "Thư mục nén" | translate }}</option>
+    <option value="unzipped bag">{{ "Thư mục đã giải nén" | translate }}</option>
+    <option value="zipped bag">{{ "Tập tin nén" | translate }}</option>
+    <option value="dspace">{{ "Thư viện điện tử" | translate }}</option>
+    <option value="disk image">{{ "Hình ảnh đĩa" | translate }}</option>
     <option value="dataverse">{{ "Dataverse" | translate }}</option>
   </select>
-  <div class="help-block">{{ "Transfer type" | translate }}</div>
+  <div class="help-block">{{ "Loại chuyển giao" | translate }}</div>
   </div>
 
   <div class="col-xs-2" ng-if="vm.transfer.type !== 'zipped bag' && vm.transfer.type !== 'zipfile'">
@@ -38,7 +42,7 @@
 
   <div class="col-xs-4">
   <button type="submit"
-          class="btn btn-default"
+          class="btn btn-default mb-2"
           data-toggle="collapse"
           data-target="#transfer_browse_tree"
           aria-expanded="false"
