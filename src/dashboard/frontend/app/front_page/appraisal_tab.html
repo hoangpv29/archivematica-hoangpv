@@ -1,5 +1,3 @@
-
-
 <div ng-controller="SearchController as vm">
   <form id='search_form' class='form-inline'>
     <div id='search_form_container'></div>
@@ -16,20 +14,17 @@
 
 <div style='clear:both'></div>
 <style>
-  #minimize-bar li{
+  #minimize-bar li {
     cursor: pointer;
     margin-right: 4px !important;
 
   }
 
-  .arrangement-class input{
+  .arrangement-class input {
     margin-bottom: 6px !important;
     height: 30px !important;
     line-height: 30px !important;
   }
-
-  
-
 </style>
 <div class='facet-box panel panel-body form' ng-controller="FacetController">
   <fieldset>
@@ -54,8 +49,8 @@
     <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
   </alert>
 </div> -->
-<!-- 
-<div ng-controller="AlertDisplayController as vm">
+
+<!-- <div ng-controller="AlertDisplayController as vm">
   <alert ng-repeat="alert in vm.alert.alerts" 
          type="{{ alert.type }}" 
          close="vm.remove($index)" 
@@ -77,59 +72,8 @@
     {{ alert.message }}
     <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
   </alert>
-</div> -->
-
-
-<div ng-controller="AlertDisplayController as vm">
-  <div ng-repeat="alert in vm.alert.alerts" 
-       class="toast" 
-       ng-style="{
-         'position': 'fixed', 
-         'top': '20px', 
-         'right': '20px', 
-         'background-color': alert.type === 'success' ? '#0066ff' : (alert.type === 'danger' ? 'red' : '#17a2b8'),
-         'color': 'white',
-         'padding': '10px 20px', 
-         'border-radius': '8px', 
-         'font-family': 'system-ui, -apple-system, sans-serif', 
-         'font-size': '14px', 
-         'box-shadow': '0 4px 12px rgba(0, 0, 0, 0.15)', 
-         'max-width': '350px', 
-         'z-index': '9999', 
-         'animation': 'slideIn 0.3s ease-out'
-       }">
-    {{ alert.message }}
-    <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
-
-    <!-- Close button -->
-    <button ng-click="vm.remove($index)" class="toast-close-btn">X</button>
-  </div>
 </div>
-<script>
- 
-  angular.element(document).ready(function() {
-    angular.module('app', []).controller('AlertDisplayController', function($timeout) {
-      var vm = this;
-      
-     
-      vm.alert = {
-        alerts: [
-          { message: 'Thành công!', type: 'success', visible: true },
-          { message: 'Lỗi xảy ra!', type: 'danger', visible: true }
-        ]
-      };
-      vm.remove = function(index) {
-        vm.alert.alerts.splice(index, 1);
-      };
 
-      $timeout(function() {
-        if (vm.alert.alerts.length > 0) {
-          vm.remove(0); 
-        }
-      }, 2000); 
-    });
-  });
-</script>
 <style>
   @keyframes slideIn {
     from {
@@ -141,7 +85,48 @@
       opacity: 1;
     }
   }
-</style>
+</style> -->
+
+
+
+<script>
+  $(document).ready(function () {
+    var alertMessage = "{{ alert.message }}";
+    var alertType = "{{ alert.type }}";
+    if (alertMessage) {
+      $('#text-toast').text(alertMessage);
+
+      switch (alertType) {
+        case 'success':
+          $('#toast').css({
+            'display': 'block',
+            'background-color': '#0066ff'
+          });
+          break;
+        case 'danger':
+          $('#toast').css({
+            'display': 'block',
+            'background-color': 'red'
+          });
+          break;
+        case 'info':
+          $('#toast').css({
+            'display': 'block',
+            'background-color': '#17a2b8'
+          });
+          break;
+        default:
+          $('#toast').css('display', 'none');
+          break;
+      }
+
+      setTimeout(() => {
+        $('#toast').css('display', 'none');
+      }, 2000);
+    }
+  });
+</script>
+
 
 <ui-minimize-bar>
 
@@ -221,11 +206,15 @@
     <div class='panel panel-default' ng-controller="FileListController as vm">
       <div class='panel-heading'>
         {{ "Danh sách tệp" | translate }}
-  
-        <span class="counts" ng-if="vm.selected_files.selected.length > 0"><b><ng-pluralize count="(vm.selected_files.selected | filter: {'type': 'file'} | facet).length" when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize></b> in list, <ng-pluralize count="vm.selected.length" when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize> selected</span>
-  
-        <span class="counts" ng-if="vm.selected_files.selected.length === 0">{{ "Danh sách tệp trống." | translate }}</span>
-  
+
+        <span class="counts" ng-if="vm.selected_files.selected.length > 0"><b><ng-pluralize
+              count="(vm.selected_files.selected | filter: {'type': 'file'} | facet).length"
+              when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize></b> in list, <ng-pluralize
+            count="vm.selected.length" when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize> selected</span>
+
+        <span class="counts" ng-if="vm.selected_files.selected.length === 0">{{ "Danh sách tệp trống." | translate
+          }}</span>
+
         <!--
         <fieldset>
           <label for='start-date-facet'>{{ "Date range start" | translate }}</label>
@@ -245,51 +234,41 @@
         </fieldset>
         <span ng-if="vm.date_facet">{{ 'Dates:' | translate }} {{ vm.date_facet }} <span ng-click="vm.reset_dates();"><i class="fa fa-times"></i></span></span>
         -->
-  
+
         <form ng-if="vm.selected_files.selected.length > 0" ng-submit="vm.submit(vm.selected)" class="form-inline">
-          <input type="text"
-                 class="form-control input-sm"
-                 ng-model="vm.tag"
-                 ng-disabled="vm.selected.length < 1">
-          <input type="submit"
-                 id="submit-tag"
-                 value="Add tag to selected files"
-                 ng-disabled="vm.selected.length < 1"
-                 class='btn btn-sm btn-default'>
+          <input type="text" class="form-control input-sm" ng-model="vm.tag" ng-disabled="vm.selected.length < 1">
+          <input type="submit" id="submit-tag" value="Add tag to selected files" ng-disabled="vm.selected.length < 1"
+            class='btn btn-sm btn-default'>
         </form>
-  
+
         <div class='actions' ng-if="vm.selected_files.selected.length > 0">
-          <a class='btn btn-sm btn-default' ng-hide="vm.show_path" ng-click="vm.show_path = !vm.show_path">{{ "Hiển thị đường dẫn" | translate }}</a>
-          <a class='btn btn-sm btn-default' ng-show="vm.show_path" ng-click="vm.show_path = !vm.show_path">{{ "Ẩn đường dẫn" | translate }}</a>
+          <a class='btn btn-sm btn-default' ng-hide="vm.show_path" ng-click="vm.show_path = !vm.show_path">{{ "Hiển thị
+            đường dẫn" | translate }}</a>
+          <a class='btn btn-sm btn-default' ng-show="vm.show_path" ng-click="vm.show_path = !vm.show_path">{{ "Ẩn đường
+            dẫn" | translate }}</a>
         </div>
       </div>
-  
+
       <div class='panel-body'>
         <table ng-if="vm.selected_files.selected.length > 0" class='table table-striped table-hover table-condensed'>
           <tr>
             <th>
-              <input type="checkbox"
-                     name="checked_files[]"
-                     value="Chọn tất cả"
-                     ng-checked="vm.all_selected"
-                     ng-click="vm.select_all()">
+              <input type="checkbox" name="checked_files[]" value="Chọn tất cả" ng-checked="vm.all_selected"
+                ng-click="vm.select_all()">
             </th>
-  <th><a ng-click="vm.set_sort_property('title')">{{ "Tên tệp" | translate }}</a></th>
-            <th ng-if="vm.show_path"><a ng-click="vm.set_sort_property('relative_path')">{{ "Đường dẫn" | translate }}</a></th>
+            <th><a ng-click="vm.set_sort_property('title')">{{ "Tên tệp" | translate }}</a></th>
+            <th ng-if="vm.show_path"><a ng-click="vm.set_sort_property('relative_path')">{{ "Đường dẫn" | translate
+                }}</a></th>
             <th><a ng-click="vm.set_sort_property('size')">{{ "Dung lượng" | translate }}</a></th>
             <th><a ng-click="vm.set_sort_property('last_modified')">{{ "Sửa đổi lần cuối" | translate }}</a></th>
             <th>{{ "Thẻ" | translate }}</th>
           </tr>
-          <tr ng-repeat="file in vm.selected_files.selected | facet | filter: {'date': '*'} : vm.facet_filter | filter: {'type': 'file'} | orderBy: vm.sort_property : vm.sort_reverse">
+          <tr
+            ng-repeat="file in vm.selected_files.selected | facet | filter: {'date': '*'} : vm.facet_filter | filter: {'type': 'file'} | orderBy: vm.sort_property : vm.sort_reverse">
             <td>
-              <input checklist
-                   type="checkbox"
-                   name="checked_files[]"
-                   ng-element="file"
-                   ng-checked="vm.selected.indexOf(file.id) > -1"
-                   record-count="vm.selected_files.selected.length"
-                   selected-list="vm.selected"
-                   all-selected="vm.all_selected">
+              <input checklist type="checkbox" name="checked_files[]" ng-element="file"
+                ng-checked="vm.selected.indexOf(file.id) > -1" record-count="vm.selected_files.selected.length"
+                selected-list="vm.selected" all-selected="vm.all_selected">
             </td>
             <td>
               <a href="#{{ vm.$routeSegment.getSegmentUrl('preview', {id: file.id}) }}">{{ file.title }}</a>
@@ -298,7 +277,8 @@
             <td>{{ file.size | number }} MB</td>
             <td>{{ file.last_modified }}</td>
             <td>
-              <span class="tag" ng-repeat="tag in file.tags">{{ tag }} <span ng-click="vm.remove_tag(file.id, tag)"><i class="fa fa-minus-square remove-button"></i></span></span>
+              <span class="tag" ng-repeat="tag in file.tags">{{ tag }} <span ng-click="vm.remove_tag(file.id, tag)"><i
+                    class="fa fa-minus-square remove-button"></i></span></span>
             </td>
           </tr>
         </table>
@@ -306,100 +286,83 @@
     </div>
   </ui-minimize-panel>
 
-  
- 
+
+
 
   <ui-minimize-panel title="{{ 'Không gian Lưu trữ' | translate }}" class="aspace-panel">
     <div class='panel panel-default' ng-controller="ArchivesSpaceController">
       <div class='panel-heading'>
         {{ "Không gian Lưu trữ" | translate }} <span ng-if="loading"><i class="fa fa-spinner fa-spin"></i></span>
 
-      <form ng-submit="load_data({title: title_query, identifier: id_query})" class="form-inline">
-        <input type="text" ng-model="title_query" placeholder="{{ 'Tiêu đề' | translate }}" class="form-control input-sm"/>
-        <input type="text" ng-model="id_query" placeholder="{{ 'Định danh' | translate }}" class="form-control input-sm"/>
-        <input type="submit" class='btn btn-sm btn-primary' id="archivesspace_search" value="{{ 'Tìm kiếm không gian Lưu trữ' | translate }}"/>
-      </form>
+        <form ng-submit="load_data({title: title_query, identifier: id_query})" class="form-inline">
+          <input type="text" ng-model="title_query" placeholder="{{ 'Tiêu đề' | translate }}"
+            class="form-control input-sm" />
+          <input type="text" ng-model="id_query" placeholder="{{ 'Định danh' | translate }}"
+            class="form-control input-sm" />
+          <input type="submit" class='btn btn-sm btn-primary' id="archivesspace_search"
+            value="{{ 'Tìm kiếm không gian Lưu trữ' | translate }}" />
+        </form>
 
-      <div class="actions">
-        <input type='button'
-               class='btn btn-primary btn-sm'
-               id='add_child_record'
-               ng-disabled="!selected"
-               ng-click="add_child(selected)"
-               value='{{ "Thêm bản ghi con mới" | translate }}'>
-        <input type='button'
-               class='btn btn-primary btn-sm'
-               id='add_child_record'
-               ng-disabled="selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component'"
-               ng-click="add_digital_object(selected)"
-               value='{{ "Thêm đối tượng số mới" | translate }}'>
-        <a class='btn btn-primary btn-sm'
-           href="{{ get_rights_url(selected) }}"
-           ng-disabled="selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component'"
-           target='_blank'>
-          {{ "Chỉnh sửa quyền siêu dữ liệu" | translate }}
-        </a>
-        <input type='button'
-               class='btn btn-primary btn-sm'
-               id='edit_record'
-               ng-disabled="!selected || selected.request_pending || selected.type === 'digital_object'"
-               ng-click="edit(selected)"
-               value='{{ "Chỉnh sửa siêu dữ liệu" | translate }}'>
-        <input type='button'
-               class='btn btn-primary btn-sm'
-               id='delete_record'
-               ng-disabled="!selected || selected.request_pending"
-               ng-confirm-click="{{ 'Are you sure you want to delete this?' | translate }}"
-               ng-click="remove(selected)"
-               value='{{ "Xóa mục đã chọn" | translate }}'>
-        <input type='button'
-               class='btn btn-success btn-sm'
-               id='finalize_arrange'
-               ng-disabled="selected.request_pending || (selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component')"
-               ng-click="finalize_arrangement(selected)"
-               value='{{ "Hoàn thiện sắp xếp" | translate }}'>
-       </div>
+        <div class="actions">
+          <input type='button' class='btn btn-primary btn-sm' id='add_child_record' ng-disabled="!selected"
+            ng-click="add_child(selected)" value='{{ "Thêm bản ghi con mới" | translate }}'>
+          <input type='button' class='btn btn-primary btn-sm' id='add_child_record'
+            ng-disabled="selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component'"
+            ng-click="add_digital_object(selected)" value='{{ "Thêm đối tượng số mới" | translate }}'>
+          <a class='btn btn-primary btn-sm' href="{{ get_rights_url(selected) }}"
+            ng-disabled="selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component'"
+            target='_blank'>
+            {{ "Chỉnh sửa quyền siêu dữ liệu" | translate }}
+          </a>
+          <input type='button' class='btn btn-primary btn-sm' id='edit_record'
+            ng-disabled="!selected || selected.request_pending || selected.type === 'digital_object'"
+            ng-click="edit(selected)" value='{{ "Chỉnh sửa siêu dữ liệu" | translate }}'>
+          <input type='button' class='btn btn-primary btn-sm' id='delete_record'
+            ng-disabled="!selected || selected.request_pending"
+            ng-confirm-click="{{ 'Are you sure you want to delete this?' | translate }}" ng-click="remove(selected)"
+            value='{{ "Xóa mục đã chọn" | translate }}'>
+          <input type='button' class='btn btn-success btn-sm' id='finalize_arrange'
+            ng-disabled="selected.request_pending || (selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component')"
+            ng-click="finalize_arrangement(selected)" value='{{ "Hoàn thiện sắp xếp" | translate }}'>
+        </div>
+      </div>
+      <div class="transfer-tree panel-body">
+        <treecontrol id="archivesspace-tree" class="tree-light" tree-model="data" options="options"
+          selected-node="selected" on-node-toggle="on_toggle(node, expanded)" expanded-nodes="expanded_nodes">
+          <!-- ArchivesSpace record -->
+          <span ng-if="node.type === 'resource'" file-type="record">
+            <i ng-if="node.has_children" class="fa fa-folder-o"></i>
+            <i ng-if="!node.has_children" class="fa fa-file-o"></i>
+            {{ node.title }} <span ng-if="node.identifier">({{ node.identifier }})</span>
+          </span>
+          <span ng-if="node.type === 'resource_component'" file-type="record">
+            <i ng-if="node.has_children" class="fa fa-folder-o"></i>
+            <i ng-if="!node.has_children" class="fa fa-file-o"></i>
+            <span ng-if="node.display_title">{{ node.display_title }}</span>
+            <span ng-if="!node.display_title">{{ node.title }}</span>
+            <span ng-if="node.identifier">({{ node.identifier }})</span>
+          </span>
+          <!-- SIP arrange directory -->
+          <span ng-if="(node.type === 'arrange_entry') &amp;&amp; node.directory" tree-droppable tree-draggable
+            on-drop="drop" file-type="arrange" file-path="{{ node.path }}">
+            <i class="fa fa-folder-o"></i>
+            {{ node.title }}
+          </span>
+          <!-- SIP arrange file -->
+          <span ng-if="(node.type === 'arrange_entry') &amp;&amp; !node.directory" tree-draggable file-type="arrange"
+            file-path="{{ node.path }}">
+            <i class="fa fa-file-code-o"></i>
+            {{ node.title }}
+          </span>
+          <!-- Digital object -->
+          <span ng-if="node.type === 'digital_object'" tree-droppable on-drop="drop" file-type="digital_object">
+            <i class="fa fa-barcode"></i>
+            {{ node.title }}
+          </span>
+        </treecontrol>
+      </div>
     </div>
-    <div class="transfer-tree panel-body">
-      <treecontrol id="archivesspace-tree"
-             class="tree-light"
-tree-model="data"
-             options="options"
-             selected-node="selected"
-             on-node-toggle="on_toggle(node, expanded)"
-             expanded-nodes="expanded_nodes">
-        <!-- ArchivesSpace record -->
-        <span ng-if="node.type === 'resource'" file-type="record">
-          <i ng-if="node.has_children" class="fa fa-folder-o"></i>
-          <i ng-if="!node.has_children" class="fa fa-file-o"></i>
-          {{ node.title }} <span ng-if="node.identifier">({{ node.identifier }})</span>
-        </span>
-        <span ng-if="node.type === 'resource_component'" file-type="record">
-          <i ng-if="node.has_children" class="fa fa-folder-o"></i>
-          <i ng-if="!node.has_children" class="fa fa-file-o"></i>
-          <span ng-if="node.display_title">{{ node.display_title }}</span>
-          <span ng-if="!node.display_title">{{ node.title }}</span>
-          <span ng-if="node.identifier">({{ node.identifier }})</span>
-        </span>
-        <!-- SIP arrange directory -->
-        <span ng-if="(node.type === 'arrange_entry') &amp;&amp; node.directory" tree-droppable tree-draggable on-drop="drop" file-type="arrange" file-path="{{ node.path }}">
-          <i class="fa fa-folder-o"></i>
-          {{ node.title }}
-        </span>
-        <!-- SIP arrange file -->
-        <span ng-if="(node.type === 'arrange_entry') &amp;&amp; !node.directory" tree-draggable file-type="arrange" file-path="{{ node.path }}">
-          <i class="fa fa-file-code-o"></i>
-          {{ node.title }}
-        </span>
-        <!-- Digital object -->
-        <span ng-if="node.type === 'digital_object'" tree-droppable on-drop="drop" file-type="digital_object">
-          <i class="fa fa-barcode"></i>
-          {{ node.title }}
-        </span>
-      </treecontrol>
-    </div>
-  </div>
-</ui-minimize-panel>
+  </ui-minimize-panel>
 
   <ui-minimize-panel title="{{ 'Sắp xếp' | translate }}">
     <div class='panel panel-default' ng-controller="ArrangementController as vm">
@@ -454,9 +417,3 @@ tree-model="data"
     </div>
   </ui-minimize-panel>
 </ui-minimize-bar>
-
-
-
-
-
-
