@@ -16,7 +16,7 @@
       <a ng-if="!record.original_order" class="disabled">{{ "original order" | translate }}</a>
     </li>
   </ul>
-  <p ng-if='(vm.SelectedFiles.selected | find_transfers).length == 0'>{{ "No information found for selected Transfers." | translate }}</p>
+  <p ng-if='(vm.SelectedFiles.selected | find_transfers).length == 0'>{{ "Không tìm thấy thông tin cho chuyển khoản đã chọn." | translate }}</p>
 
   <div ng-if="(vm.SelectedFiles.selected | find_files).length != 0">
   <h2>{{ "Files" | translate }}</h2>
@@ -74,7 +74,7 @@
   </table>
   </div>
 
-  <p ng-if='(vm.SelectedFiles.selected | find_files).length == 0'>{{ "No information found for selected files." | translate }}</p>
+  <p ng-if='(vm.SelectedFiles.selected | find_files).length == 0'>{{ "Không tìm thấy thông tin nào cho các tệp đã chọn." | translate }}</p>
 
   <div app-view-segment="1"></div>
 </div>
