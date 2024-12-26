@@ -88,11 +88,13 @@
 </style> -->
 
 
-
+<div id="alert-data" data-message="{{ alert.message }}" data-type="{{ alert.type }}" style="display:none"></div>
 <script>
   $(document).ready(function () {
-    var alertMessage = "{{ alert.message }}";
-    var alertType = "{{ alert.type }}";
+    
+    var alertMessage = $('#alert-data').data('message');
+    var alertType = $('#alert-data').data('type');
+
     if (alertMessage) {
       $('#text-toast').text(alertMessage);
 
