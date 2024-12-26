@@ -2,8 +2,8 @@
   <form id='search_form' class='form-inline'>
   <div id='search_form_container'></div>
   <div id='search_form_submit_container'>
-    <input class='form-control btn-primary' type='button' id='search_submit' value='{{ "Search transfer backlog" | translate }}'>
-    <span style='margin-left: 10px'>{{ "Show metadata & logs directories?" | translate }}</span>
+    <input class='form-control btn-primary' type='button' id='search_submit' value='{{ "Tìm kiếm backlog cần chuyển giao" | translate }}'>
+    <span style='margin-left: 10px'>{{ "Hiển thị metadata và log?" | translate }}</span>
     <span style='margin-left: 5px'><input id='id_show_metadata_logs' type='checkbox' /></span>
   </div>
   </form>
@@ -15,9 +15,9 @@
 
 <div class='facet-box panel panel-body form' ng-controller="FacetController">
   <fieldset>
-    <label for='tag-facet'>{{ "Tags" | translate }}</label>
+    <label for='tag-facet'>{{ "Thẻ" | translate }}</label>
     <select ng-model="tag_facet" class='form-control' id='tag-facet'>
-      <option value="">{{ "All" | translate }}</option>
+      <option value="">{{ "Tất cả" | translate }}</option>
       <option ng-repeat="tag in transfers.tags" value="{{ tag }}">{{ tag }}</option>
     </select>
   </fieldset>
@@ -283,65 +283,65 @@
   </div>
 </ui-minimize-panel>
 
-<ui-minimize-panel title="{{ 'Arrangement' | translate }}">
-<div class='panel panel-default' ng-controller="ArrangementController as vm">
-  <div class='panel-heading'>
-    {{ "Arrangement" | translate }}
-    <div class='facet-box panel-body form'>
-      <form ng-submit="vm.create_sip_from_tag()" class="form-inline">
-        <fieldset>
-          <label for='tag-facet-arrangement'>{{ "Tags" | translate }}</label>
-          <select ng-model="vm.create_sip_tag" class='form-control' id='tag-facet-arrangement'>
-            <option value="">{{ "None" | translate }}</option>
-            <option ng-repeat="tag in vm.transfer.tags" value="{{ tag }}">{{ tag }}</option>
-          </select>
-          <input type="submit"
-                 id="arrangement-submit"
-                 value="Create SIP"
-                 ng-disabled="!vm.create_sip_tag"
-                 class='btn btn-primary'>
-        </fieldset>
-      </form>
+<ui-minimize-panel title="{{ 'Sắp xếp' | translate }}">
+  <div class='panel panel-default' ng-controller="ArrangementController as vm">
+    <div class='panel-heading'>
+      {{ "Sắp xếp" | translate }}
+      <div class='facet-box panel-body form'>
+        <form ng-submit="vm.create_sip_from_tag()" class="form-inline">
+          <fieldset>
+            <label for='tag-facet-arrangement'>{{ "Thẻ" | translate }}</label>
+            <select ng-model="vm.create_sip_tag" class='form-control' id='tag-facet-arrangement'>
+              <option value="">{{ "None" | translate }}</option>
+              <option ng-repeat="tag in vm.transfer.tags" value="{{ tag }}">{{ tag }}</option>
+            </select>
+            <input type="submit"
+                   id="arrangement-submit"
+                   value="Tạo SIP"
+                   ng-disabled="!vm.create_sip_tag"
+                   class='btn btn-primary'>
+          </fieldset>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="transfer-tree panel-body">
-    <input type="button"
-           class="btn btn-primary"
-           id="add_directory"
-           ng-click="vm.create_directory(vm.selected)"
-           value="{{ 'Add directory' | translate }}">
-    <input type="button"
-           class="btn btn-primary"
-           id="edit_metadata_arrangement"
-           ng-disabled="!vm.selected"
-           ng-click="vm.edit_metadata(vm.selected)"
-           value="{{ 'Edit Metadata' | translate }}">
-    <input type="button"
-           class="btn btn-primary"
-           id="delete_directory"
-           ng-disabled="!vm.selected"
-           ng-confirm-click="{{ 'Are you sure you want to delete this?' | translate }}"
-           ng-click="vm.delete_directory(vm.selected)"
-           value="{{ 'Delete selected' | translate }}">
-    <input type="button"
-           class="btn btn-primary"
-           id="start_sip_arrangemnt"
-           ng-disabled="!vm.selected"
-           ng-click="vm.start_sip(vm.selected)"
-           value="{{ 'Create SIP' | translate }}">
-    <input type="button"
-           class="btn btn-primary"
-           id="refresh"
-           ng-click="vm.refresh(vm.selected)"
-           value="{{ 'Reload' | translate }}">
-    <treecontrol id="arrangement-tree"
-          class="tree-classic"
-          tree-model="vm.data"
-          options="vm.options"
-          selected-node="vm.selected"
-          on-node-toggle="vm.on_toggle(node, expanded)"
-          filter-expression="vm.filter_expression"
-          filter-comparator="vm.filter_comparator">
+    <div class="transfer-tree panel-body">
+      <input type="button"
+             class="btn btn-primary"
+             id="add_directory"
+             ng-click="vm.create_directory(vm.selected)"
+             value="{{ 'Thêm thư mục' | translate }}">
+      <input type="button"
+             class="btn btn-primary"
+             id="edit_metadata_arrangement"
+             ng-disabled="!vm.selected"
+             ng-click="vm.edit_metadata(vm.selected)"
+             value="{{ 'Chỉnh sửa siêu dữ liệu' | translate }}">
+      <input type="button"
+             class="btn btn-primary"
+             id="delete_directory"
+             ng-disabled="!vm.selected"
+             ng-confirm-click="{{ 'Are you sure you want to delete this?' | translate }}"
+             ng-click="vm.delete_directory(vm.selected)"
+             value="{{ 'Xóa mục đã chọn' | translate }}">
+      <input type="button"
+             class="btn btn-primary"
+             id="start_sip_arrangemnt"
+             ng-disabled="!vm.selected"
+             ng-click="vm.start_sip(vm.selected)"
+             value="{{ 'Tạo SIP' | translate }}">
+      <input type="button"
+             class="btn btn-primary"
+             id="refresh"
+             ng-click="vm.refresh(vm.selected)"
+             value="{{ 'Tải lại' | translate }}">
+      <treecontrol id="arrangement-tree"
+            class="tree-classic"
+            tree-model="vm.data"
+            options="vm.options"
+            selected-node="vm.selected"
+            on-node-toggle="vm.on_toggle(node, expanded)"
+            filter-expression="vm.filter_expression"
+            filter-comparator="vm.filter_comparator">
       <!-- New files can only be dragged into directories, not other files -->
       <span tree-draggable tree-droppable file-type="arrange" file-path="/arrange/{{ node.path }}" on-drop="vm.drop" ng-if="node.directory">
         {{ node.title }} <span ng-if="node.properties">({{ node.properties.display_string }})</span>
