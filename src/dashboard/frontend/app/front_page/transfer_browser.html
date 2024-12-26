@@ -7,7 +7,11 @@
   </div>
   
   <div class="row" id="transfer-browser-form">
-
+<style>
+  .mb-2{
+    margin-bottom: 4px!important;
+  }
+</style>
   <div class="col-xs-2">
   <select class="form-control" ng-model="vm.transfer.type" ng-disabled="vm.transfer.components.length > 0">
     <option value="standard" selected>{{ "Tiêu chuẩn" | translate }}</option>
