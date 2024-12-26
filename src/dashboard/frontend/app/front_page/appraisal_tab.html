@@ -48,8 +48,17 @@
 
 <div style='clear:both'></div>
 <style>
-  
+  #minimize-bar li{
+    cursor: pointer;
+    margin-right: 4px !important;
 
+  }
+
+  .arrangement-class input{
+    margin-bottom: 6px !important;
+  }
+
+  
 
 </style>
 <div class='facet-box panel panel-body form' ng-controller="FacetController">
@@ -377,7 +386,7 @@ tree-model="data"
           </form>
         </div>
       </div>
-      <div class="transfer-tree panel-body">
+      <div class="transfer-tree panel-body arrangement-class">
         <input type="button" class="btn btn-primary" id="add_directory" ng-click="vm.create_directory(vm.selected)"
           value="{{ 'Thêm thư mục' | translate }}">
         <input type="button" class="btn btn-primary" id="edit_metadata_arrangement" ng-disabled="!vm.selected"
