@@ -24,7 +24,8 @@
 
   <ul class='list-inline'>
     <li ng-repeat="facet in Facet.facet_list">
-      {{ facet.name }}: {{ facet.text }} <span ng-click="remove_facet(facet.facet, facet.id);"><i class="fa fa-times"></i></span>
+      {{ facet.name }}: {{ facet.text }} <span ng-click="remove_facet(facet.facet, facet.id);"><i
+          class="fa fa-times"></i></span>
     </li>
   </ul>
 </div>
@@ -38,80 +39,90 @@
 
 <ui-minimize-bar>
 
-<ui-minimize-panel title="{{ 'Backlog' | translate }}" open="true" class="transfer-panel">
-  <div class='panel panel-default' ng-controller="TreeController">
-    <div class='panel-heading'>
-      {{ "Backlog" | translate }}
+  <ui-minimize-panel title="Kho tạm" open="true" class="transfer-panel">
+    <div class='panel panel-default' ng-controller="TreeController">
+      <div class='panel-heading'>
+        Kho tạm
+        <span class="counts">
+          <b translate translate-n="(files.selected | filter:{'type': 'transfer'}).length"
+            translate-plural="{{$count}} transfers">1 chuyển đổi</b>,
+          <b translate translate-n="files.selected.length" translate-plural="{{$count}} objects selected">1 đối tượng đã được chọn</b>
+        </span>
 
-      <span class="counts">
-        <b translate translate-n="(files.selected | filter:{'type': 'transfer'}).length" translate-plural="{{$count}} transfers">1 transfer</b>,
-        <b translate translate-n="files.selected.length" translate-plural="{{$count}} objects selected">1 object selected</b>
-      </span>
+        <form ng-submit="submit()" class="form-inline">
+          <input type="text" ng-model="tag" ng-disabled="files.selected.length < 1" class="form-control input-sm">
+          <input type="submit" id="submit-tag" value="{{ 'Thêm thẻ vào các tệp đã chọn' | translate }}"
+            ng-disabled="files.selected.length < 1" class='btn btn-sm btn-default'>
+        </form>
 
-      <form ng-submit="submit()" class="form-inline">
-        <input type="text" ng-model="tag" ng-disabled="files.selected.length < 1" class="form-control input-sm">
-        <input type="submit" id="submit-tag" value="{{ 'Add tag to selected files' | translate }}" ng-disabled="files.selected.length < 1" class='btn btn-sm btn-default'>
-      </form>
+        <div class='actions'>
+          <input class='btn btn-sm btn-default' type="button" value="{{ 'Bỏ chọn tất cả' | translate }}"
+            ng-click="deselect()" ng-disabled="files.selected.length < 1">
+          <input class='btn btn-sm btn-default' type="button" value="{{ 'Thu gọn tất cả' | translate }}"
+            ng-click="transfers.collapse_all_nodes()">
+          <input class='btn btn-sm btn-default' type="button" value="{{ 'Mở tất cả' | translate }}"
+            ng-click="transfers.expand_all_nodes()">
+        </div>
+      </div>
+      <div></div>
 
-      <div class='actions'>
-        <input class='btn btn-sm btn-default' type="button" value="{{ 'Deselect all' | translate }}" ng-click="deselect()" ng-disabled="files.selected.length < 1">
-        <input class='btn btn-sm btn-default' type="button" value="{{ 'Collapse all' | translate }}" ng-click="transfers.collapse_all_nodes()">
-        <input class='btn btn-sm btn-default' type="button" value="{{ 'Expand all' | translate }}" ng-click="transfers.expand_all_nodes()">
+      <div class="transfer-tree panel-body">
+        <treecontrol class="tree-classic" tree-model="transfers.data" options="options"
+          on-selection="track_selected(node, selected)" selected-nodes="files.selected"
+          filter-expression="filter_expression" filter-comparator="filter_comparator"
+          expanded-nodes="transfers.expanded_nodes">
+          <span tree-draggable file-type="backlog" uuid="{{ node.id }}" ng-if="!node.not_draggable">
+            {{ node.title }} <span class="tag" ng-repeat="tag in node.tags">{{ tag }} <span
+                ng-click="remove_tag($event, node.id, tag)"><i
+                  class="fa fa-minus-square remove-button"></i></span></span>
+          </span>
+          <span class="disabled" ng-if="node.not_draggable">
+            {{ node.title }} <span class="tag" ng-repeat="tag in node.tags">{{ tag }} <span
+                ng-click="remove_tag($event, node.id, tag)"><i
+                  class="fa fa-minus-square remove-button"></i></span></span>
+          </span>
+        </treecontrol>
       </div>
     </div>
+  </ui-minimize-panel>
 
-    <div class="transfer-tree panel-body">
-      <treecontrol class="tree-classic"
-                   tree-model="transfers.data"
-                   options="options"
-                   on-selection="track_selected(node, selected)"
-                   selected-nodes="files.selected"
-                   filter-expression="filter_expression"
-                   filter-comparator="filter_comparator"
-                   expanded-nodes="transfers.expanded_nodes">
-        <span tree-draggable file-type="backlog" uuid="{{ node.id }}" ng-if="!node.not_draggable">
-          {{ node.title }} <span class="tag" ng-repeat="tag in node.tags">{{ tag }} <span ng-click="remove_tag($event, node.id, tag)"><i class="fa fa-minus-square remove-button"></i></span></span>
-        </span>
-        <span class="disabled" ng-if="node.not_draggable">
-          {{ node.title }} <span class="tag" ng-repeat="tag in node.tags">{{ tag }} <span ng-click="remove_tag($event, node.id, tag)"><i class="fa fa-minus-square remove-button"></i></span></span>
-        </span>
-      </treecontrol>
+  <ui-minimize-panel title="Phân tích" open='true'>
+    <div class='panel panel-default' ng-controller="AnalysisController">
+      <div>
+        <ul class="nav nav-pills nav-pane" role='menu'>
+          <li ng-class="{ active: $routeSegment.contains('objects') }">
+            <a href="#{{ $routeSegment.getSegmentUrl('objects') }}">{{ "Đối tượng" | translate }}</a>
+          </li>
+          <li ng-class="{ active: $routeSegment.contains('tags') }">
+            <a href="#{{ $routeSegment.getSegmentUrl('tags') }}">{{ "Thẻ" | translate }}</a>
+          </li>
+          <li ng-class="{ active: $routeSegment.contains('examine_contents') }">
+            <a href="#{{ $routeSegment.getSegmentUrl('examine_contents', {type: ''}) }}">{{ "Kiểm tra nội dung" |
+              translate }}</a>
+          </li>
+          <li ng-class="{ active: $routeSegment.contains('preview') }">
+            <a href="#{{ $routeSegment.getSegmentUrl('preview', {id: ''}) }}">{{ "Xem trước tập tin" | translate }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class='panel-body' app-view-segment="0"></div>
     </div>
-  </div>
-</ui-minimize-panel>
+  </ui-minimize-panel>
 
-<ui-minimize-panel title="{{ 'Analysis' | translate }}" open='true'>
-  <div class='panel panel-default' ng-controller="AnalysisController">
-    <div>
-      <ul class="nav nav-pills nav-pane" role='menu'>
-        <li ng-class="{ active: $routeSegment.contains('objects') }">
-          <a href="#{{ $routeSegment.getSegmentUrl('objects') }}">{{ "Objects" | translate }}</a>
-        </li>
-        <li ng-class="{ active: $routeSegment.contains('tags') }">
-          <a href="#{{ $routeSegment.getSegmentUrl('tags') }}">{{ "Tags" | translate }}</a>
-        </li>
-        <li ng-class="{ active: $routeSegment.contains('examine_contents') }">
-          <a href="#{{ $routeSegment.getSegmentUrl('examine_contents', {type: ''}) }}">{{ "Examine contents" | translate }}</a>
-        </li>
-        <li ng-class="{ active: $routeSegment.contains('preview') }">
-          <a href="#{{ $routeSegment.getSegmentUrl('preview', {id: ''}) }}">{{ "Preview file" | translate }}</a>
-        </li>
-      </ul>
-    </div>
-    <div class='panel-body' app-view-segment="0"></div>
-  </div>
-</ui-minimize-panel>
 
 <ui-minimize-panel title="{{ 'Danh sách tệp' | translate }}" open='false'>
   <div class='panel panel-default' ng-controller="FileListController as vm">
     <div class='panel-heading'>
       {{ "Danh sách tệp" | translate }}
+        <span class="counts" ng-if="vm.selected_files.selected.length > 0"><b><ng-pluralize
+              count="(vm.selected_files.selected | filter: {'type': 'file'} | facet).length"
+              when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize></b> in list, <ng-pluralize
+            count="vm.selected.length" when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize> selected</span>
 
-      <span class="counts" ng-if="vm.selected_files.selected.length > 0"><b><ng-pluralize count="(vm.selected_files.selected | filter: {'type': 'file'} | facet).length" when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize></b> in list, <ng-pluralize count="vm.selected.length" when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize> selected</span>
+        <span class="counts" ng-if="vm.selected_files.selected.length === 0">{{ "File list is empty." | translate
+          }}</span>
 
-      <span class="counts" ng-if="vm.selected_files.selected.length === 0">{{ "Danh sách tệp trống." | translate }}</span>
-
-      <!--
+        <!--
       <fieldset>
         <label for='start-date-facet'>{{ "Date range start" | translate }}</label>
         <input type="text"
@@ -131,23 +142,18 @@
       <span ng-if="vm.date_facet">{{ 'Dates:' | translate }} {{ vm.date_facet }} <span ng-click="vm.reset_dates();"><i class="fa fa-times"></i></span></span>
       -->
 
-      <form ng-if="vm.selected_files.selected.length > 0" ng-submit="vm.submit(vm.selected)" class="form-inline">
-        <input type="text"
-               class="form-control input-sm"
-               ng-model="vm.tag"
-               ng-disabled="vm.selected.length < 1">
-        <input type="submit"
-               id="submit-tag"
-               value="Add tag to selected files"
-               ng-disabled="vm.selected.length < 1"
-               class='btn btn-sm btn-default'>
-      </form>
+        <form ng-if="vm.selected_files.selected.length > 0" ng-submit="vm.submit(vm.selected)" class="form-inline">
+          <input type="text" class="form-control input-sm" ng-model="vm.tag" ng-disabled="vm.selected.length < 1">
+          <input type="submit" id="submit-tag" value="Add tag to selected files" ng-disabled="vm.selected.length < 1"
+            class='btn btn-sm btn-default'>
+        </form>
 
       <div class='actions' ng-if="vm.selected_files.selected.length > 0">
         <a class='btn btn-sm btn-default' ng-hide="vm.show_path" ng-click="vm.show_path = !vm.show_path">{{ "Hiển thị đường dẫn" | translate }}</a>
         <a class='btn btn-sm btn-default' ng-show="vm.show_path" ng-click="vm.show_path = !vm.show_path">{{ "Ẩn đường dẫn" | translate }}</a>
       </div>
     </div>
+  </ui-minimize-panel>
 
     <div class='panel-body'>
       <table ng-if="vm.selected_files.selected.length > 0" class='table table-striped table-hover table-condensed'>
@@ -188,8 +194,7 @@
         </tr>
       </table>
     </div>
-  </div>
-</ui-minimize-panel>
+  </ui-minimize-panel>
 
 <ui-minimize-panel title="{{ 'Không gian Lưu trữ' | translate }}" class="aspace-panel">
   <div class='panel panel-default' ng-controller="ArchivesSpaceController">
@@ -356,10 +361,8 @@
               <i class="fa fa-minus-square remove-button"></i>
             </span>
           </span>
-        </span>
-      </span>
-    </treecontrol>
-  </div>
-</div>
-</ui-minimize-panel>
+        </treecontrol>
+      </div>
+    </div>
+  </ui-minimize-panel>
 </ui-minimize-bar>
