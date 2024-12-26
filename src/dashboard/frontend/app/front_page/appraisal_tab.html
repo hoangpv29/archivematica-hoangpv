@@ -1,36 +1,4 @@
-<script>
-  angular.module('app', []).controller('AlertDisplayController', function () {
-    var vm = this;
 
-    vm.alert = {
-      alerts: [
-        { message: 'Thành công!', type: 'success', visible: true },
-        { message: 'Lỗi xảy ra!', type: 'error', visible: true },
-      ],
-    };
-
-    vm.remove = function (index) {
-      vm.alert.alerts.splice(index, 1);
-    };
-
-    vm.getToastStyle = function (alert) {
-      return {
-        position: 'fixed',
-        right: '20px',
-        top: (20 + vm.alert.alerts.indexOf(alert) * 60) + 'px',
-        backgroundColor: alert.type === 'success' ? '#0066ff' : 'red',
-        color: 'white',
-        padding: '16px 48px 16px 16px',
-        borderRadius: '8px',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-        fontSize: '14px',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-        maxWidth: '350px',
-        zIndex: '9999',
-      };
-    };
-  });
-</script>
 
 <div ng-controller="SearchController as vm">
   <form id='search_form' class='form-inline'>
@@ -76,28 +44,42 @@
   </alert>
 </div>
 
-
 <div ng-controller="AlertDisplayController as vm">
-  <div id="toast" ng-repeat="alert in vm.alert.alerts" ng-style="vm.getToastStyle(alert)" class="toast"
-    ng-if="alert.visible">
-    <span id="text-toast">{{ alert.message }}</span>
-    <button style="
-            position: absolute; 
-            top: 50%; 
-            right: 16px; 
-            transform: translateY(-50%); 
-            background: none; 
-            border: none; 
-            color: white; 
-            cursor: pointer; 
-            padding: 0; 
-            font-size: 18px; 
-            line-height: 1; 
-            opacity: 0.8;" ng-click="vm.remove($index)">
-      ×
-    </button>
-  </div>
-</div>  
+  <alert ng-repeat="alert in vm.alert.alerts" 
+         type="{{ alert.type }}" 
+         close="vm.remove($index)" 
+         ng-style="{
+           'position': 'fixed', 
+           'top': '20px', 
+           'left': '20px', 
+           'background-color': alert.type === 'success' ? '#28a745' : (alert.type === 'danger' ? '#dc3545' : '#0066ff'),
+           'color': 'white',
+           'padding': '10px 20px', 
+           'border-radius': '8px', 
+           'font-family': 'system-ui, -apple-system, sans-serif', 
+           'font-size': '14px', 
+           'box-shadow': '0 4px 12px rgba(0, 0, 0, 0.15)', 
+           'max-width': '150px', 
+           'z-index': '9999', 
+           'animation': 'slideIn 0.3s ease-out'
+         }">
+    {{ alert.message }}
+    <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
+  </alert>
+</div>
+
+<style>
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+</style>
 
 
 
