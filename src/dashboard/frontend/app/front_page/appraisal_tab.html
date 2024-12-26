@@ -54,7 +54,7 @@
     <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
   </alert>
 </div> -->
-
+<!-- 
 <div ng-controller="AlertDisplayController as vm">
   <alert ng-repeat="alert in vm.alert.alerts" 
          type="{{ alert.type }}" 
@@ -77,8 +77,59 @@
     {{ alert.message }}
     <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
   </alert>
-</div>
+</div> -->
 
+
+<div ng-controller="AlertDisplayController as vm">
+  <div ng-repeat="alert in vm.alert.alerts" 
+       class="toast" 
+       ng-style="{
+         'position': 'fixed', 
+         'top': '20px', 
+         'right': '20px', 
+         'background-color': alert.type === 'success' ? '#0066ff' : (alert.type === 'danger' ? 'red' : '#17a2b8'),
+         'color': 'white',
+         'padding': '10px 20px', 
+         'border-radius': '8px', 
+         'font-family': 'system-ui, -apple-system, sans-serif', 
+         'font-size': '14px', 
+         'box-shadow': '0 4px 12px rgba(0, 0, 0, 0.15)', 
+         'max-width': '350px', 
+         'z-index': '9999', 
+         'animation': 'slideIn 0.3s ease-out'
+       }">
+    {{ alert.message }}
+    <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
+
+    <!-- Close button -->
+    <button ng-click="vm.remove($index)" class="toast-close-btn">X</button>
+  </div>
+</div>
+<script>
+ 
+  angular.element(document).ready(function() {
+    angular.module('app', []).controller('AlertDisplayController', function($timeout) {
+      var vm = this;
+      
+     
+      vm.alert = {
+        alerts: [
+          { message: 'Thành công!', type: 'success', visible: true },
+          { message: 'Lỗi xảy ra!', type: 'danger', visible: true }
+        ]
+      };
+      vm.remove = function(index) {
+        vm.alert.alerts.splice(index, 1);
+      };
+
+      $timeout(function() {
+        if (vm.alert.alerts.length > 0) {
+          vm.remove(0); 
+        }
+      }, 2000); 
+    });
+  });
+</script>
 <style>
   @keyframes slideIn {
     from {
@@ -91,8 +142,6 @@
     }
   }
 </style>
-
-
 
 <ui-minimize-bar>
 
