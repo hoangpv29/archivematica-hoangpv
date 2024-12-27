@@ -88,7 +88,13 @@
 </style> -->
 
 
-<div id="alert-data" data-message="{{ alert.message }}" data-type="{{ alert.type }}" style="display:none"></div>
+<!-- <div ng-controller="AlertDisplayController as vm">
+  <alert ng-repeat="alert in vm.alert.alerts" type="{{ alert.type }}" close="vm.remove($index)">
+    {{ alert.message }}
+    <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
+  </alert>
+</div> -->
+<!-- <div id="alert-data" data-message="{{ alert.message }}" data-type="{{ alert.type }}" style="display:none"></div>
 <script>
   $(document).ready(function () {
     
@@ -127,8 +133,55 @@
       }, 2000);
     }
   });
-</script>
+</script> -->
 
+
+<div ng-controller="AlertDisplayController as vm">
+  <alert ng-repeat="alert in vm.alert.alerts" type="{{ alert.type }}" close="vm.remove($index)">
+    {{ alert.message }}
+    <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
+  </alert>
+</div>
+
+<script>
+  angular.module('app').controller('AlertDisplayController', function ($scope) {
+    $scope.$watch('vm.alert.alerts', function (alerts) {
+      if (alerts && alerts.length > 0) {
+        const latestAlert = alerts[0]; 
+        const alertMessage = latestAlert.message;
+        const alertType = latestAlert.type;
+
+     
+        $('#toast').text(alertMessage);
+
+        let bgColor;
+        switch (alertType) {
+          case 'success':
+            bgColor = '#0066ff';
+            break;
+          case 'danger':
+            bgColor = 'red';
+            break;
+          case 'info':
+            bgColor = '#17a2b8';
+            break;
+          default:
+            bgColor = '#333';
+            break;
+        }
+        $('#toast').css({
+          display: 'block',
+          backgroundColor: bgColor,
+        });
+
+        // Hide the toast after 2 seconds
+        setTimeout(() => {
+          $('#toast').css('display', 'none');
+        }, 2000);
+      }
+    }, true); // Deep watch on `vm.alert.alerts`
+  });
+</script>
 
 <ui-minimize-bar>
 
