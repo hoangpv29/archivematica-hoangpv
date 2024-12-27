@@ -217,25 +217,6 @@
         <span class="counts" ng-if="vm.selected_files.selected.length === 0">{{ "Danh sách tệp trống." | translate
           }}</span>
 
-        <!--
-        <fieldset>
-          <label for='start-date-facet'>{{ "Date range start" | translate }}</label>
-          <input type="text"
-                 ng-model="vm.date_start"
-                 class='form-control'
-                 id='start-date-facet'
-                 ng-change="vm.set_date_filter(vm.date_start, vm.date_end)"
-                 ng-pattern="vm.date_regex"/>
-          <label for='end-date-facet'>{{ "Date range end" | translate }}</label>
-          <input type="text"
-                 ng-model="vm.date_end"
-                 class='form-control'
-                 id='end-date-facet'
-                 ng-change="vm.set_date_filter(vm.date_start, vm.date_end)"
-                 ng-pattern="vm.date_regex"/>
-        </fieldset>
-        <span ng-if="vm.date_facet">{{ 'Dates:' | translate }} {{ vm.date_facet }} <span ng-click="vm.reset_dates();"><i class="fa fa-times"></i></span></span>
-        -->
 
         <form ng-if="vm.selected_files.selected.length > 0" ng-submit="vm.submit(vm.selected)" class="form-inline">
           <input type="text" class="form-control input-sm" ng-model="vm.tag" ng-disabled="vm.selected.length < 1">
