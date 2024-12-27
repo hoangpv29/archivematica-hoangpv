@@ -174,16 +174,16 @@
           backgroundColor: bgColor,
         });
 
-        // Hide the toast after 2 seconds
+    
         setTimeout(() => {
           $('#toast').css('display', 'none');
         }, 2000);
       }
-    }, true); // Deep watch on `vm.alert.alerts`
+    }, true);
   });
 </script>
 
-<ui-minimize-bar>
+<ui-minimize-bar style="display: grid; grid-template-columns: repeat(2,1fr);">
 
   <ui-minimize-panel title="Kho tạm" open="true" class="transfer-panel">
     <div class='panel panel-default' ng-controller="TreeController">
