@@ -159,7 +159,7 @@ controller('ArchivesSpaceController', ['$scope', 'gettextCatalog', '$uibModal', 
 
         Alert.alerts.push({
           type: 'danger',
-          message: gettextCatalog.getString('Unable to submit edits to record "{{title}}"; check dashboard logs.', { title: title }),
+          message: gettextCatalog.getString('Không thể gửi sửa đổi để ghi lại "{{title}}"; Kiểm tra nhật ký bảng điều khiển.', { title: title }),
         });
       };
 
@@ -230,7 +230,7 @@ controller('ArchivesSpaceController', ['$scope', 'gettextCatalog', '$uibModal', 
       var on_failure = error => {
         Alert.alerts.push({
           type: 'danger',
-          message: gettextCatalog.getString('Unable to add new child record to record {{id}}', { id: node.id }),
+          message: gettextCatalog.getString('Không thể thêm bản ghi con mới vào bản ghi {{id}}', { id: node.id }),
         });
       };
 
@@ -263,7 +263,7 @@ controller('ArchivesSpaceController', ['$scope', 'gettextCatalog', '$uibModal', 
     var on_failure = result => {
       Alert.alerts.push({
         type: 'danger',
-        message: gettextCatalog.getString('Unable to add new digital object component to record {{id}}', { id: node.id }),
+        message: gettextCatalog.getString('Không thể thêm thành phần đối tượng kỹ thuật số mới để ghi {{id}}', { id: node.id }),
       });
     };
 
@@ -295,7 +295,7 @@ controller('ArchivesSpaceController', ['$scope', 'gettextCatalog', '$uibModal', 
     var on_failure_aspace = error => {
       Alert.alerts.push({
         type: 'danger',
-        message: gettextCatalog.getString('Unable to fetch record {{id}} from ArchivesSpace!', { id: node.id }),
+        message: gettextCatalog.getString('Không thể tìm nạp bản ghi {{id}} từ ArchivesSpace!', { id: node.id }),
       });
       $scope.loading = false;
     };
@@ -303,7 +303,7 @@ controller('ArchivesSpaceController', ['$scope', 'gettextCatalog', '$uibModal', 
     var on_failure_arrange = error => {
       Alert.alerts.push({
         type: 'danger',
-        message: gettextCatalog.getString('Unable to fetch record {{path}} from Arrangement!', { path: node.path }),
+        message: gettextCatalog.getString('Không thể tìm nạp bản ghi {{path}} từ Arrangement!', { path: node.path }),
       });
       $scope.loading = false;
     };
@@ -349,7 +349,7 @@ controller('ArchivesSpaceController', ['$scope', 'gettextCatalog', '$uibModal', 
       $scope.loading = false;
       Alert.alerts.push({
         type: 'danger',
-        message: gettextCatalog.getString('Unable to access ArchivesSpace; check dashboard logs!'),
+        message: gettextCatalog.getString('Không thể truy cập ArchivesSpace; Kiểm tra nhật ký bảng điều khiển!'),
       });
     };
 
@@ -552,7 +552,7 @@ controller('ArchivesSpaceController', ['$scope', 'gettextCatalog', '$uibModal', 
       node.request_pending = false;
       Alert.alerts.push({
         type: 'success',
-        message: gettextCatalog.getString('Successfully started SIP from record "{{title}}"', { title: node.display_title }),
+        message: gettextCatalog.getString('Khởi động thành công SIP từ bản ghi "{{title}}"', { title: node.display_title }),
       });
 
       // Remove the digital object components so the user doesn't try to add new items

@@ -93,7 +93,7 @@ class TransferBrowserTransfer {
     this.Alert.alerts.push({
       'type': 'info',
       'message': this.gettextCatalog.getString(
-        'Transfer "{{name}}" started with processing configuration "{{config}}".',
+        'Chuyển đổi "{{name}}" started with processing configuration "{{config}}".',
         { name: name, config: processing_config }
       )
     });

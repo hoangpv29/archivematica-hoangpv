@@ -7,67 +7,71 @@
   </div>
   
   <div class="row" id="transfer-browser-form">
-
+<style>
+  .mb-2{
+    margin-bottom: 4px!important;
+  }
+</style>
   <div class="col-xs-2">
   <select class="form-control" ng-model="vm.transfer.type" ng-disabled="vm.transfer.components.length > 0">
-    <option value="standard" selected>{{ "Standard" | translate }}</option>
-    <option value="zipfile" selected>{{ "Zipped directory" | translate }}</option>
-    <option value="unzipped bag">{{ "Unzipped bag" | translate }}</option>
-    <option value="zipped bag">{{ "Zipped bag" | translate }}</option>
-    <option value="dspace">{{ "DSpace" | translate }}</option>
-    <option value="disk image">{{ "Disk image" | translate }}</option>
+    <option value="standard" selected>{{ "Tiêu chuẩn" | translate }}</option>
+    <option value="zipfile" selected>{{ "Thư mục nén" | translate }}</option>
+    <option value="unzipped bag">{{ "Thư mục đã giải nén" | translate }}</option>
+    <option value="zipped bag">{{ "Tập tin nén" | translate }}</option>
+    <option value="dspace">{{ "Thư viện điện tử" | translate }}</option>
+    <option value="disk image">{{ "Hình ảnh đĩa" | translate }}</option>
     <option value="dataverse">{{ "Dataverse" | translate }}</option>
   </select>
-  <div class="help-block">{{ "Transfer type" | translate }}</div>
+  <div class="help-block">{{ "Loại chuyển giao" | translate }}</div>
   </div>
 
   <div class="col-xs-2" ng-if="vm.transfer.type !== 'zipped bag' && vm.transfer.type !== 'zipfile'">
   <input class="form-control" ng-model="vm.transfer.name"/>
-  <div class="help-block">{{ "Transfer name" | translate }}</div>
+  <div class="help-block">{{ "Tên chuyển giao" | translate }}</div>
   </div>
 
   <div class="col-xs-2">
   <input class="form-control" ng-model="vm.transfer.accession"/>
-  <div class="help-block">{{ "Accession no." | translate }}</div>
+  <div class="help-block">{{ "Số tiếp nhận" | translate }}</div>
   </div>
 
   <div class="col-xs-2">
   <input class="form-control" ng-model="vm.transfer.access_system_id"/>
-  <div class="help-block">{{ "Access system ID" | translate }}</div>
+  <div class="help-block">{{ "ID hệ thống truy cập" | translate }}</div>
   </div>
 
   <div class="col-xs-4">
   <button type="submit"
-          class="btn btn-default"
+          class="btn btn-default mb-2"
           data-toggle="collapse"
           data-target="#transfer_browse_tree"
           aria-expanded="false"
-          aria-controls="transfer_browse_tree">{{ "Browse" | translate }}</button>
+          aria-controls="transfer_browse_tree">{{ "Thư mục" | translate }}</button>
   <div class="btn-group">
     <button type="submit"
           class="btn btn-success"
-          title='{{ "Start with default processing configuration" | translate }}'
+          title='{{ "Bắt đầu với cấu hình xử lý mặc định" | translate }}'
           ng-disabled="!vm.enable_submit_button()"
-          ng-click="vm.transfer.start('default')">{{ "Start transfer" | translate }}</button>
+          ng-click="vm.transfer.start('default')">{{ "Bắt đầu chuyển giao" | translate }}</button>
     <button type="submit"
           class="btn btn-success dropdown-toggle"
-          title='{{ "Choose a processing configuration" | translate }}'
+          title='{{ "Chọn cấu hình xử lý" | translate }}'
           ng-disabled="!vm.enable_submit_button()"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false">
       <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
+      <span class="sr-only">Điều khiển menu thả xuống</span>
     </button>
     <ul class="dropdown-menu">
       <li class="processing-config-choice"
           ng-repeat="processing_config in vm.transfer.processing_configs">
-        <a ng-click="vm.transfer.start(processing_config)" translate>Start with "{{ processing_config }}" configuration</a>
+        <a ng-click="vm.transfer.start(processing_config)" translate>Sử dụng cấu hình "{{ processing_config }}" để bắt đầu</a>
       </li>
     </ul>
   </div>
   <div class="checkbox">
-    <label><input type="checkbox" ng-model="vm.transfer.auto_approve">{{ "Approve automatically" | translate }}</label>
+    <label><input type="checkbox" ng-model="vm.transfer.auto_approve">{{ "Duyệt tự động" | translate }}</label>
   </div>
   </div>
 
@@ -111,6 +115,6 @@
           class="btn btn-primary pull-right"
           ng-click="vm.transfer.add_component(vm.selected)"
           ng-disabled="!vm.selected || !vm.file_can_be_added(vm.selected)">
-    {{ "Add" | translate }}
+    {{ "Thêm" | translate }}
   </button>
 </div>
