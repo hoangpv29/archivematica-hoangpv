@@ -1,3 +1,4 @@
+
 <div ng-controller="SearchController as vm">
   <form id='search_form' class='form-inline'>
     <div id='search_form_container'></div>
@@ -85,13 +86,13 @@
            'right': '20px', 
            'background-color': vm.alert.alerts[vm.alert.alerts.length - 1].type === 'success' ? '#0066ff' : (vm.alert.alerts[vm.alert.alerts.length - 1].type === 'danger' ? 'red' : '#17a2b8'),
            'color': 'white',
-           'padding': '20px 20px', 
+           'padding': '15px 20px', 
            'border-radius': '8px', 
            'font-family': 'system-ui, -apple-system, sans-serif', 
            'font-size': '14px', 
            'box-shadow': '0 4px 12px rgba(0, 0, 0, 0.15)', 
            'max-width': '500px', 
-           'z-index': '9999', 
+           'z-index': '9999',   
            'animation': 'slideIn 0.3s ease-out',
           
          }">
@@ -103,7 +104,7 @@
     <!-- Custom Close Button -->
     <button ng-click="vm.clearAll()" class="close-btn" ng-style="{
               'position': 'absolute', 
-              'top': '5px', 
+              'top': '10px', 
               'right': '5px', 
               'background': 'none', 
               'border': 'none', 
@@ -294,9 +295,9 @@
         {{ "Không gian Lưu trữ" | translate }} <span ng-if="loading"><i class="fa fa-spinner fa-spin"></i></span>
 
         <form ng-submit="load_data({title: title_query, identifier: id_query})" class="form-inline">
-          <input type="text" ng-model="title_query" placeholder="{{ 'Title' | translate }}"
+          <input type="text" ng-model="title_query" placeholder="{{ 'Tiêu đề' | translate }}"
             class="form-control input-sm" />
-          <input type="text" ng-model="id_query" placeholder="{{ 'Identifier' | translate }}"
+          <input type="text" ng-model="id_query" placeholder="{{ 'Định danh' | translate }}"
             class="form-control input-sm" />
           <input type="submit" class='btn btn-sm btn-primary' id="archivesspace_search"
             value="{{ 'Tìm kiếm không gian Lưu trữ' | translate }}" />
@@ -311,7 +312,7 @@
           <a class='btn btn-primary btn-sm' href="{{ get_rights_url(selected) }}"
             ng-disabled="selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component'"
             target='_blank'>
-            {{ "Edit rights metadata" | translate }}
+            {{ "Chỉnh sửa siêu dữ liệu quyền" | translate }}
           </a>
           <input type='button' class='btn btn-primary btn-sm' id='edit_record'
             ng-disabled="!selected || selected.request_pending || selected.type === 'digital_object'"
