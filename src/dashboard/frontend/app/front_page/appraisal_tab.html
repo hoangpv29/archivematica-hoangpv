@@ -224,9 +224,14 @@
           selected
         </span>
 
-        <span class="counts" ng-if="vm.selected_files.selected.length === 0">
-          {{ "File list is empty." | translate }}
-        </span>
+        <span class="counts" ng-if="vm.selected_files.selected.length > 0"><b><ng-pluralize
+              count="(vm.selected_files.selected | filter: {'type': 'file'} | facet).length"
+              when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize></b> in list, <ng-pluralize
+            count="vm.selected.length" when="{'1': '1 object', 'other': '{} objects'}"></ng-pluralize> lựa chọn</span>
+
+        <span class="counts" ng-if="vm.selected_files.selected.length === 0">{{ "Danh sách tệp trống." | translate
+          }}</span>
+
 
         <form ng-if="vm.selected_files.selected.length > 0" ng-submit="vm.submit(vm.selected)" class="form-inline">
           <input type="text" class="form-control input-sm" ng-model="vm.tag" ng-disabled="vm.selected.length < 1">
@@ -313,8 +318,8 @@
             ng-click="edit(selected)" value='{{ "Chỉnh sửa siêu dữ liệu" | translate }}'>
           <input type='button' class='btn btn-primary btn-sm' id='delete_record'
             ng-disabled="!selected || selected.request_pending"
-            ng-confirm-click="{{ 'Are you sure you want to delete this?' | translate }}" ng-click="remove(selected)"
-            value='{{ "Delete selected" | translate }}'>
+            ng-confirm-click="{{ 'ạn có chắc chắn muốn xóa không?' | translate }}" ng-click="remove(selected)"
+            value='{{ "Xóa mục đã chọn" | translate }}'>
           <input type='button' class='btn btn-success btn-sm' id='finalize_arrange'
             ng-disabled="selected.request_pending || (selected.type !== 'resource' &amp;&amp; selected.type !== 'resource_component')"
             ng-click="finalize_arrangement(selected)" value='{{ "Hoàn thiện sắp xếp" | translate }}'>
