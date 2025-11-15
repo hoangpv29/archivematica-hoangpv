@@ -16,7 +16,7 @@ function renderBacklogSearchForm(search_uri, on_success, on_error) {
       'type': 'term'
     },
     'deleteHandleHtml': '<img src="/media/images/delete.png" style="margin-left: 5px"/>',
-    'addHandleHtml': '<a>' + gettext('Add new') + '</a>'
+    'addHandleHtml': '<a>' + gettext('Thêm mới') + '</a>'
   });
 
   // define op field

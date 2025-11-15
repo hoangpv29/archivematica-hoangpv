@@ -73,7 +73,7 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
   vm.create_sip_from_tag = function() {
     // if there's a SIP already started ask for confirmation
     if (vm.data.length > 0) {
-      if (!confirm(gettextCatalog.getString('Are you sure you want to discard the current directory?'))) {
+      if (!confirm(gettextCatalog.getString('Bạn có chắc chắn muốn loại bỏ thư mục hiện tại không??'))) {
         return;
       }
       // delete existing UI data
@@ -221,7 +221,7 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
   };
 
   vm.create_directory = parent => {
-    var path = prompt(gettextCatalog.getString('Name of new directory?'));
+    var path = prompt(gettextCatalog.getString('Tên thư mục mới?'));
     if (!path) {
       return;
     }

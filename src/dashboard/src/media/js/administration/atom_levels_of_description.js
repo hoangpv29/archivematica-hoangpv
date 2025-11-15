@@ -40,7 +40,7 @@ function demoteLevel(id) {
 }
 
 function deleteLevel(id) {
-  if (confirm(gettext('Are you sure you want to delete this level of description?'))) {
+  if (confirm(gettext('Bạn có chắc chắn muốn xóa cấp độ mô tả này không?'))) {
     submitAtomLevelOperation('delete', id);
   }
 }

@@ -23,7 +23,7 @@ class HeaderController {
   }
 
   remove_component(component) {
-    if (confirm(`Are you sure you want to remove this transfer component (${component.path})?`)) {
+    if (confirm(`Bạn có chắc chắn muốn xóa thành phần chuyển giao này (${component.path}) không?`)) {
       this.transfer.components.pop(component);
     }
   }
