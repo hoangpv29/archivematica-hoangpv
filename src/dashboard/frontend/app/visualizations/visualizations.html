@@ -3,9 +3,9 @@
     <a href="#{{ $routeSegment.getSegmentUrl('objects.visualizations.files') }}">{{ "Định dạng (theo tổng số tệp)" | translate }}</a>
   </li>
   <li ng-class="{ active: $routeSegment.contains('size') }">
-    <a href="#{{ $routeSegment.getSegmentUrl('objects.visualizations.size') }}">{{ "Định dạng (theo tổng kích thước của tệp)" | translate }}</a>
+    <a href="#{{ $routeSegment.getSegmentUrl('objects.visualizations.size') }}">{{ "Định dạng (theo tổng kích thước tệp)" | translate }}</a>
   </li>
 </ul>
 
-<p ng-if='records.selected.length === 0'>{{ "Không có tập tin nào được chọn " | translate }}</p>
+<p ng-if='records.selected.length === 0'>{{ "Chưa chọn tệp nào" | translate }}</p>
 <div app-view-segment="2"></div>
