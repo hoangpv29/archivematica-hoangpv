@@ -65,7 +65,7 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
   var show_wait_for_sip_alert = function() {
     Alert.alerts.push({
       'type': 'info',
-      'message': gettextCatalog.getString('Please wait while the SIP is started'),
+      'message': gettextCatalog.getString('Vui lòng đợi trong khi SIP được khởi động'),
       'show_spinner': true,
     });
   };
@@ -145,13 +145,13 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
       let on_success = success => {
         Alert.alerts.push({
           'type': 'success',
-          'message': gettextCatalog.getString('SIP successfully started!'),
+          'message': gettextCatalog.getString('SIP đã bắt đầu thành công!'),
         });
       };
       let on_failure = error => {
         Alert.alerts.push({
           'type': 'danger',
-          'message': gettextCatalog.getString('SIP could not be started! Check dashboard logs.'),
+          'message': gettextCatalog.getString('Không thể khởi động SIP! Kiểm tra nhật ký bảng điều khiển.'),
         });
       };
       // wait that all the promises for creating directories resolve first
@@ -266,15 +266,15 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
 
       Alert.alerts.push({
         'type': 'success',
-        'message': gettextCatalog.getString('SIP successfully started!'),
+        'message': gettextCatalog.getString('SIP đã bắt đầu thành công!'),
       });
     };
 
     var on_failure = error => {
-      var message = gettextCatalog.getString('SIP could not be started! Check dashboard logs.');
+      var message = gettextCatalog.getString('Không thể khởi động SIP! Kiểm tra nhật ký bảng điều khiển.');
 
       if (error.hasOwnProperty("data") && error.data.hasOwnProperty("code") && "ERR_NO_FILES" == error.data.code) {
-        message = gettextCatalog.getString('It is not possible to create an empty SIP.');
+        message = gettextCatalog.getString('Không thể tạo SIP trống.');
       }
 
       Alert.alerts.push({
@@ -380,7 +380,7 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
           error: error => {
             Alert.alerts.push({
              'type': 'danger',
-             'message': gettextCatalog.getString('Unable to submit edits to record "{{title}}"; check dashboard logs.', { title: node_title })
+             'message': gettextCatalog.getString('Không thể gửi chỉnh sửa để ghi lại "{{title}}"; kiểm tra nhật ký bảng điều khiển.', { title: node_title })
             });
           },
           // always refresh the tree after submission
@@ -396,7 +396,7 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
       function() { // error
         Alert.alerts.push({
           'type': 'danger',
-          'message': gettextCatalog.getString('Error fetching levels of description')
+          'message': gettextCatalog.getString('Lỗi khi tìm nạp cấp độ mô tả')
         });
         vm.refresh();
       }
@@ -406,7 +406,7 @@ controller('ArrangementController', ['$scope', 'gettextCatalog', '$uibModal', '$
   var on_copy_failure = error => {
     Alert.alerts.push({
       'type': 'danger',
-      'message': gettextCatalog.getString('Failed to copy files to SIP arrange; check Dashboard logs.'),
+      'message': gettextCatalog.getString('Không thể sao chép tập tin vào sắp xếp SIP; kiểm tra nhật ký Bảng điều khiển.'),
     });
   };
   var on_copy_success = success => {

@@ -35,8 +35,32 @@
   </ul>
 </div>
 
-<div ng-controller="AlertDisplayController as vm">
+<!-- <div ng-controller="AlertDisplayController as vm">
   <alert ng-repeat="alert in vm.alert.alerts" type="{{ alert.type }}" close="vm.remove($index)">
+    {{ alert.message }}
+    <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
+  </alert>
+</div> -->
+
+<!-- <div ng-controller="AlertDisplayController as vm">
+  <alert ng-repeat="alert in vm.alert.alerts" 
+         type="{{ alert.type }}" 
+         close="vm.remove($index)" 
+         ng-style="{
+           'position': 'fixed', 
+           'top': '20px', 
+           'right': '20px', 
+           'background-color': alert.type === 'success' ? '#0066ff' : (alert.type === 'danger' ? 'red' : '#17a2b8'),
+           'color': 'white',
+           'padding': '10px 20px', 
+           'border-radius': '8px', 
+           'font-family': 'system-ui, -apple-system, sans-serif', 
+           'font-size': '14px', 
+           'box-shadow': '0 4px 12px rgba(0, 0, 0, 0.15)', 
+           'max-width': '350px', 
+           'z-index': '9999', 
+           'animation': 'slideIn 0.3s ease-out'
+         }">
     {{ alert.message }}
     <span ng-if="alert.show_spinner"><i class="fa fa-spinner fa-spin"></i></span>
   </alert>

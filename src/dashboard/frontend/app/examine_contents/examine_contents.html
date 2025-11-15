@@ -1,6 +1,6 @@
 <ul class="nav nav-pills">
   <li ng-class="{ active: vm.type === 'pii' }">
-    <a href="#{{ vm.$routeSegment.getSegmentUrl('examine_contents', {type: 'pii'}) }}">{{ "PII" | translate }}</a>
+    <a href="#{{ vm.$routeSegment.getSegmentUrl('examine_contents', {type: 'pii'}) }}">{{ "Thông tin cá nhân" | translate }}</a>
   </li>
   <li ng-class="{ active: vm.type === 'ccn' }">
     <a href="#{{ vm.$routeSegment.getSegmentUrl('examine_contents', {type: 'ccn'}) }}">{{ "Số thẻ tín dụng" | translate }}</a>
